@@ -1,6 +1,16 @@
 package main
 
-import "log"
+import (
+	"fmt"
+	"harry-potter/service"
+	"log"
+	"net/http"
+
+	"github.com/rs/cors"
+)
+
+const port = 8080
+const web = "http://localhost:8000"
 
 func main() {
 	if err := run(); err != nil {
@@ -9,6 +19,19 @@ func main() {
 }
 
 func run() error {
+	o := cors.Options{
+		AllowedOrigins: []string{web},
+		AllowedMethods: []string{http.MethodGet},
+	}
 
-	return nil
+	h := service.New()
+
+	srv := http.Server{
+		Addr:     fmt.Sprintf(":%d", port),
+		Handler:  cors.New(o).Handler(h),
+		ErrorLog: log.Default(),
+	}
+
+	srv.ErrorLog.Printf("listening to http://localhost:%d", port)
+	return srv.ListenAndServe()
 }

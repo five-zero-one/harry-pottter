@@ -18,7 +18,7 @@ type Service struct {
 	r store.Repo
 }
 
-func New() *Service {
+func New() http.Handler {
 	s := &Service{
 		mux: chi.NewMux(),
 		r:   store.New(),
@@ -32,8 +32,8 @@ func (s *Service) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Service) routes() {
-	s.mux.Get("/characters", s.handleCharacterList)
-	s.mux.Get("/characters/{characterId}", s.handleUniqueCharacter)
+	s.mux.Get("/api/characters", s.handleCharacterList)
+	s.mux.Get("/api/characters/{characterId}", s.handleUniqueCharacter)
 }
 
 func (s *Service) handleCharacterList(w http.ResponseWriter, r *http.Request) {
