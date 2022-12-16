@@ -1,8 +1,6 @@
 import { Layout } from "../components/Layout.tsx";
 import { Handlers, PageProps } from "$fresh/server.ts";
 
-
-
 const api = "http://localhost:8080/api";
 
 export const handler: Handlers<Character[] | null> = {
