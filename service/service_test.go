@@ -1,30 +1,23 @@
-package harrypotter
+package service_test
 
 import (
 	"encoding/json"
+	hp "harry-potter"
 	"net/http"
 	"net/http/httptest"
-	"strings"
 	"testing"
+
+	"harry-potter/service"
 
 	"github.com/hyphengolang/prelude/testing/is"
 )
 
-func TestReadJSON(t *testing.T) {
-	is := is.New(t)
-
-	var cs []Character
-	err := json.NewDecoder(strings.NewReader(database)).Decode(&cs)
-	is.NoErr(err)         // read json file
-	is.Equal(len(cs), 25) // length is 25
-}
-
 func TestService(t *testing.T) {
 	is := is.New(t)
 
-	h := newService()
-
+	h := service.New()
 	srv := httptest.NewServer(h)
+
 	t.Cleanup(func() { srv.Close() })
 
 	t.Run("get all characters", func(t *testing.T) {
@@ -35,7 +28,7 @@ func TestService(t *testing.T) {
 		is.Equal(resp.StatusCode, http.StatusOK) // get response
 		defer resp.Body.Close()
 
-		var cs []Character
+		var cs []hp.Character
 		err = json.NewDecoder(resp.Body).Decode(&cs)
 		is.NoErr(err)         // decoding the body
 		is.Equal(len(cs), 25) // length is 25
@@ -49,7 +42,7 @@ func TestService(t *testing.T) {
 		is.Equal(resp.StatusCode, http.StatusOK) // get response
 		defer resp.Body.Close()
 
-		var c Character
+		var c hp.Character
 		err = json.NewDecoder(resp.Body).Decode(&c)
 		is.NoErr(err)                 // decoding the body
 		is.Equal(c.Name, "Cho Chang") // Character 110 has name Cho Chang
@@ -63,7 +56,7 @@ func TestService(t *testing.T) {
 		is.Equal(resp.StatusCode, http.StatusOK) // get response
 		defer resp.Body.Close()
 
-		var cs []Character
+		var cs []hp.Character
 		err = json.NewDecoder(resp.Body).Decode(&cs)
 		is.NoErr(err)         // decoding the body
 		is.Equal(len(cs), 11) // length is for "Half-blood"
@@ -77,7 +70,7 @@ func TestService(t *testing.T) {
 		is.Equal(resp.StatusCode, http.StatusOK) // get response
 		defer resp.Body.Close()
 
-		var cs []Character
+		var cs []hp.Character
 		err = json.NewDecoder(resp.Body).Decode(&cs)
 		is.NoErr(err)        // decoding the body
 		is.Equal(len(cs), 2) // length is for "Feb"
@@ -91,7 +84,7 @@ func TestService(t *testing.T) {
 		is.Equal(resp.StatusCode, http.StatusOK) // get response
 		defer resp.Body.Close()
 
-		var cs []Character
+		var cs []hp.Character
 		err = json.NewDecoder(resp.Body).Decode(&cs)
 		is.NoErr(err)        // decoding the body
 		is.Equal(len(cs), 1) // length is for "Neville Longbottom"
@@ -105,7 +98,7 @@ func TestService(t *testing.T) {
 		is.Equal(resp.StatusCode, http.StatusOK) // get response
 		defer resp.Body.Close()
 
-		var cs []Character
+		var cs []hp.Character
 		err = json.NewDecoder(resp.Body).Decode(&cs)
 		is.NoErr(err)        // decoding the body
 		is.Equal(len(cs), 4) // length is for "Half-blood & Sep"

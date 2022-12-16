@@ -1,7 +1,9 @@
-package harrypotter
+package service
 
 import (
 	"encoding/json"
+	"harry-potter/store"
+	"harry-potter/store/option"
 	"net/http"
 	"strconv"
 
@@ -13,13 +15,13 @@ const applicationJson = "application/json"
 type Service struct {
 	mux chi.Router
 
-	r *Repo
+	r store.Repo
 }
 
-func newService() *Service {
+func New() *Service {
 	s := &Service{
 		mux: chi.NewMux(),
-		r:   newRepo(),
+		r:   store.New(),
 	}
 	s.routes()
 	return s
@@ -62,8 +64,8 @@ func (s *Service) handleUniqueCharacter(w http.ResponseWriter, r *http.Request) 
 	s.respond(w, c, http.StatusOK)
 }
 
-func (s *Service) parseFilterOptions(r *http.Request) FilterOption {
-	return NewFilter(r.URL.Query())
+func (s *Service) parseFilterOptions(r *http.Request) option.FilterOption {
+	return option.NewFilter(r.URL.Query())
 }
 
 func (s Service) parseCharacterID(r *http.Request) (int, error) {

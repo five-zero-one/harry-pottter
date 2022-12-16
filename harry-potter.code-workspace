@@ -1,0 +1,21 @@
+{
+    "folders": [
+        {
+            "path": "./web",
+            "name": "web-client"
+        },
+        {
+            "path": ".",
+            "name": "server"
+        }
+    ],
+    "settings": {
+        "cSpell.words": [
+            "harrypotter",
+            "mapconv",
+            "Mtos",
+            "Patronus",
+            "Stom"
+        ]
+    },
+}

@@ -1,7 +1,10 @@
-package harrypotter
+package store_test
 
 import (
+	"harry-potter/store/option"
 	"testing"
+
+	"harry-potter/store"
 
 	"github.com/hyphengolang/prelude/testing/is"
 )
@@ -9,18 +12,18 @@ import (
 func TestRepo(t *testing.T) {
 	is := is.New(t)
 
-	r := newRepo()
+	r := store.New()
 
 	t.Run("return all members of the list", func(t *testing.T) {
-		var q FilterOption
+		var q option.FilterOption
 		cs, err := r.Filter(q)
 		is.NoErr(err)         // filter characters list
 		is.Equal(len(cs), 25) // 25 characters in the list
 	})
 
 	t.Run("return all half-blood characters", func(t *testing.T) {
-		var q = FilterOption{
-			blood: "half-blood",
+		var q = option.FilterOption{
+			Blood: "half-blood",
 		}
 		cs, err := r.Filter(q)
 		is.NoErr(err)         // filter by blood type
@@ -28,8 +31,8 @@ func TestRepo(t *testing.T) {
 	})
 
 	t.Run("return all characters that born in February", func(t *testing.T) {
-		var q = FilterOption{
-			month: "february",
+		var q = option.FilterOption{
+			Month: "february",
 		}
 		cs, err := r.Filter(q)
 		is.NoErr(err)        // filter by blood type
@@ -37,9 +40,9 @@ func TestRepo(t *testing.T) {
 	})
 
 	t.Run("return all characters that are `half-blood` and born in `September`", func(t *testing.T) {
-		var q = FilterOption{
-			blood: "half-blood",
-			month: "Sep",
+		var q = option.FilterOption{
+			Blood: "half-blood",
+			Month: "Sep",
 		}
 		cs, err := r.Filter(q)
 		is.NoErr(err)        // filter by blood type
