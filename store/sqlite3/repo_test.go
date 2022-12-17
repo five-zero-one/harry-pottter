@@ -96,7 +96,7 @@ func TestRepo(t *testing.T) {
 			Name: "ronald",
 		}
 		cs, err := r.Filter(q)
-		is.NoErr(err)                                // filter by blood type
+		is.NoErr(err)                                // filter by name
 		is.Equal(cs[0].Name, "Ronald (Ron) Weasley") // character should be `Ronald (Ron) Weasley`
 	})
 }
