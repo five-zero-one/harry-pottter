@@ -90,4 +90,13 @@ func TestRepo(t *testing.T) {
 		is.NoErr(err)        // filter by blood type
 		is.Equal(len(cs), 4) // X characters in the list
 	})
+
+	t.Run("get one character from database using store", func(t *testing.T) {
+		var q = option.FilterOption{
+			Name: "ronald",
+		}
+		cs, err := r.Filter(q)
+		is.NoErr(err)                                // filter by blood type
+		is.Equal(cs[0].Name, "Ronald (Ron) Weasley") // character should be `Ronald (Ron) Weasley`
+	})
 }
