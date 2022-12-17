@@ -18,10 +18,10 @@ type Service struct {
 	r store.Repo
 }
 
-func New() http.Handler {
+func New(r store.Repo) http.Handler {
 	s := &Service{
 		mux: chi.NewMux(),
-		r:   store.New(),
+		r:   r,
 	}
 	s.routes()
 	return s

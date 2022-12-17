@@ -8,6 +8,7 @@ require (
 )
 
 require (
+	github.com/go-chi/chi/v5 v5.0.8
 	github.com/hyphengolang/prelude v0.1.3 // indirect
 	golang.org/x/exp v0.0.0-20221217163422-3c43f8badb15 // indirect
 )
